@@ -2,6 +2,7 @@ const csv = require("csv-parse");
 const fs = require("fs");
 const Handlebars = require("handlebars");
 var dateFormat = require("dateformat");
+const Csvv = require("csv");
 
 var source =
   "'use strict';\
@@ -18,8 +19,23 @@ var source =
     }\
   };";
 
+let transformer = Csvv.transform(data => {
+  let dirty = data.toString();
+  let replace = dirty.replace(/(\r\n|\n|\r)/gm, "");
+  return replace;
+});
+
 fs.createReadStream("sql/Masterdata.sql")
-  .pipe(csv({ delimiter: ";", trim: true, relax: true }))
+  //.pipe(transformer)
+  .pipe(
+    csv({
+      delimiter: "~", // given a non existant character, we delimit sql statements only
+      trim: true,
+      relax: true,
+      skip_empty_lines: true,
+      record_delimiter: ";"
+    })
+  )
   .on("data", data => {
     let row = new Object();
     var entity = data.toString().match(/\".*?\"/);
@@ -49,7 +65,7 @@ fs.createReadStream("sql/Masterdata.sql")
     console.log(result);
     fs.writeFile(
       "seeders/" +
-        dateFormat(new Date(), "yyyymmddhMMssL") +
+        dateFormat(new Date(), "yyyymmddhMMssl") +
         "-" +
         row.table +
         ".js",

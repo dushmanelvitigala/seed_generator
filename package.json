@@ -17,10 +17,12 @@
   },
   "homepage": "https://github.com/dushmanelvitigala/seed_generator#readme",
   "dependencies": {
+    "csv": "^5.1.1",
     "csv-parse": "^4.3.4",
     "dateformat": "^3.0.3",
     "handlebars": "^4.1.1",
     "sequelize": "^5.1.0",
-    "sequelize-cli": "^5.4.0"
+    "sequelize-cli": "^5.4.0",
+    "stream-transform": "^1.0.8"
   }
 }
