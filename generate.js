@@ -18,7 +18,7 @@ var source =
       return queryInterface.bulkDelete('{{table}}', null, {});\
     }\
   };";
-
+var template = Handlebars.compile(source);
 let transformer = Csvv.transform(data => {
   let dirty = data.toString();
   let replace = dirty.replace(/(\r\n|\n|\r)/gm, "");
@@ -26,7 +26,7 @@ let transformer = Csvv.transform(data => {
 });
 
 fs.createReadStream("sql/Masterdata.sql")
-  //.pipe(transformer)
+  .pipe(transformer)
   .pipe(
     csv({
       delimiter: "~", // given a non existant character, we delimit sql statements only
@@ -60,7 +60,7 @@ fs.createReadStream("sql/Masterdata.sql")
       }
       console.log(row);
     }
-    var template = Handlebars.compile(source);
+
     var result = template(row);
     console.log(result);
     fs.writeFile(

@@ -23,6 +23,8 @@
     "handlebars": "^4.1.1",
     "sequelize": "^5.1.0",
     "sequelize-cli": "^5.4.0",
-    "stream-transform": "^1.0.8"
+    "stream-transform": "^1.0.8",
+    "pg": "^7.8.1",
+    "pg-hstore": "^2.3.2"
   }
 }
