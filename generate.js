@@ -25,7 +25,7 @@ let transformer = Csvv.transform(data => {
   return replace;
 });
 
-fs.createReadStream("sql/Masterdata.sql")
+fs.createReadStream(process.argv.slice(2).toString())
   .pipe(transformer)
   .pipe(
     csv({
